@@ -7,15 +7,19 @@ from django.urls import reverse
 from django.db.models import F
 from .models import Question, Choice
 from django.views import generic
-
+from django.utils import timezone
 
 # using generic views
+
+
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
-        return Question.objects.order_by("-pub_date")[:5]
+        # only shows the questions whose pub_date is less than current time
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+        # return Question.objects.order_by("-pub_date")[:5]
 
 
 class DetailView(generic.DeleteView):
