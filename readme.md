@@ -1,4 +1,4 @@
-# start the development server a
+# start the development server
 
     python manage.py runserver
 
